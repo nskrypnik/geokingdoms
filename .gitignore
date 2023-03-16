@@ -1,0 +1,5 @@
+.DS_Store
+scripts/run_local.sh
+tmp
+development
+__pycache__
