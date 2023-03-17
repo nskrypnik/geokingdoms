@@ -3,7 +3,6 @@ import sys
 import logging
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from databases import Database
 from api.models.base import Base
 
 GEOAPP_DB_CONNECTION = "GEOAPP_DB_CONNECTION"
@@ -14,12 +13,10 @@ if database_connection_url is None:
     sys.exit(-1)
 
 # create a SQLAlchemy engine
-engine = create_engine(database_connection_url)
+engine = create_engine(database_connection_url, pool_size=100, max_overflow=200)
 
 # create a session factory
 SessionFactory = sessionmaker(bind=engine)
-
-database = Database(database_connection_url)
 
 def create_database():
 

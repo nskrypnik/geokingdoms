@@ -1,5 +1,6 @@
 from .base import Base
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.dialects.postgresql import JSONB
 
 
 class Kingdom(Base):
@@ -8,3 +9,4 @@ class Kingdom(Base):
     name = Column(String, index=True, nullable=False)
     king = Column(String)
     description = Column(String)
+    territory = Column(JSONB)

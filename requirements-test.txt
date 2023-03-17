@@ -1,1 +1,5 @@
 locust
+pytest
+pytest-asyncio
+faker
+shapely

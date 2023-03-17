@@ -14,12 +14,13 @@ async def create_kingdom(kingdom: KingdomCreate, db_session: Session = Depends(g
     """
         Create new kingdom
     """
-
     new_kingdom = Kingdom(
         name=kingdom.name,
         king=kingdom.king,
-        description=kingdom.description
+        description=kingdom.description,
+        territory=kingdom.territory.json()
     )
+
     db_session.add(new_kingdom)
     db_session.commit()
     db_session.refresh(new_kingdom)
@@ -55,9 +56,10 @@ async def update_kingdom(kingdom_id: int, updated: KingdomUpdate, db_session: Se
             status_code=404,
             detail=HTTP_404_MESSAGE)
     
-    kingdom.name = updated.name if updated.name else kingdom.name
-    kingdom.description = updated.description if updated.description else kingdom.description
-    kingdom.king = updated.king if updated.king else kingdom.king
+    kingdom.name = updated.name or kingdom.name
+    kingdom.description = updated.description or kingdom.description
+    kingdom.king = updated.king or kingdom.king
+    kingdom.territory = updated.territory.json() if updated.territory else kingdom.territory
 
     db_session.commit()
     db_session.refresh(kingdom)
